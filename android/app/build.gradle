@@ -108,8 +108,15 @@ android {
 }
 
 dependencies {
-    // The version of react-native is set by the React Native Gradle Plugin
-    implementation("com.facebook.react:react-android")
+    implementation("com.facebook.react:react-android") {
+        exclude group: 'com.google.android.gms', module: 'play-services-base'
+    }
+    implementation("androidx.core:core:1.9.0") {
+        exclude group: "com.android.support", module: "support-compat"
+    }
+    
+    // Example dependency, replace with the actual library you need
+    implementation('com.squareup.retrofit2:retrofit:2.9.0') // Example
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
