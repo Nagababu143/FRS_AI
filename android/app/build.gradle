@@ -78,7 +78,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
     project.ext.vectoricons = [
-    iconFontNames: ['MaterialIcons.ttf', 'EvilIcons.ttf','AntDesign.ttf','MaterialCommunityIcons.ttf','Entypo.ttf','Ionicons.ttf']
+    iconFontNames: ['MaterialIcons.ttf', 'EvilIcons.ttf','AntDesign.ttf','MaterialCommunityIcons.ttf','Entypo.ttf','Ionicons.ttf','FontAwesome.ttf']
     ]
 
     namespace "com.anganwadiproject"

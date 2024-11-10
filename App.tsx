@@ -1,13 +1,13 @@
-import { NavigationContainer } from "@react-navigation/native";
-import DrawerNavigation from "./Source/Navigations/DrawerNavigation";
-import { useCameraPermission, useMicrophonePermission } from "react-native-vision-camera";
-import SplashScreen from "react-native-splash-screen";
-import { useEffect, useState } from "react";
+import { NavigationContainer } from '@react-navigation/native';
+import DrawerNavigation from './Source/Navigations/DrawerNavigation';
+import { useCameraPermission, useMicrophonePermission } from 'react-native-vision-camera';
+import SplashScreen from 'react-native-splash-screen';
+import { useEffect, useState } from 'react';
+import { navigationRef } from './Source/Utils/Navigation';
 
 const App = () => {
   const { hasPermission: cameraPermission, requestPermission: cameraPermissionRequest } = useCameraPermission();
   const { hasPermission: microphonePermission, requestPermission: microphonePermissionRequest } = useMicrophonePermission();
-  
   const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const App = () => {
   }, [isSplashVisible, cameraPermission, microphonePermission]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <DrawerNavigation />
     </NavigationContainer>
   );
