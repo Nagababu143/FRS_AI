@@ -1,8 +1,12 @@
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
 import React, { useRef, useState, useEffect } from 'react';
 import { Camera, useCameraDevice, useCameraPermission,useFrameProcessor } from 'react-native-vision-camera';
-import FaceDetection from '@react-native-ml-kit/face-detection';
+// import FaceDetection from '@react-native-ml-kit/face-detection';
 // import { useFaceDetector } from 'react-native-vision-camera-face-detector';
+import FaceDetection, {
+  FaceDetectorLandmarkMode,
+  FaceDetectorContourMode,
+} from 'react-native-face-detection';
 import { runOnJS } from 'react-native-reanimated';
 
 const RegistrationScreen = () => {
@@ -55,11 +59,14 @@ const RegistrationScreen = () => {
     try {
       const photo = await camera.current.takePhoto({});
       console.log('Photo taken:', photo);
-      const faces = await FaceDetection.detect(photo.path, { landmarkMode: 'all' });
-      console.log("faces",faces)
-      if (faces) {
+      // Detect faces in the photo
+      const faces = await FaceDetection.processImage(photo.path, {
+        landmarkMode: FaceDetectorLandmarkMode.ALL,
+        contourMode: FaceDetectorContourMode.ALL,
+      });
+
+      if (faces.length > 0) {
         console.log('Faces detected:', faces);
-        
         // Upload the photo and faces data to your backend
         const response = await fetch('https://zelxbudq5h.execute-api.us-east-1.amazonaws.com/Dev/FaceRecognition', {
           method: 'POST',
@@ -67,11 +74,10 @@ const RegistrationScreen = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            photoPath: photo.path,
             faces,
           }),
         });
-  console.log(response)
+            console.log(response)
         if (response.ok) {
           Alert.alert('Success', 'Faces uploaded successfully');
         } else {
